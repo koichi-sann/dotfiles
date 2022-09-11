@@ -77,10 +77,14 @@ myTerminal :: String
 myTerminal      = "kitty"
 
 myBrowser :: String
-myBrowser       = "firefox "
+myBrowser       = "qutebrowser "
 
 myEditor :: String
 myEditor        = myTerminal ++ " -e vi "
+
+myEmacs :: String
+myEmacs = ""
+-- myEmacs     = "emacsclint -c -a 'emacs' "
 
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
@@ -327,7 +331,8 @@ myManageHook = composeAll
     , className =? "Gimp"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
-    , className =? "confim"         --> doFloat
+    , className =? "qutebrowser"    --> doFloat
+    , className =? "confirm"        --> doFloat
     , className =? "dialog"         --> doFloat
     , className =? "file_progress"  --> doFloat
     , className =? "download"       --> doFloat
@@ -339,6 +344,7 @@ myManageHook = composeAll
     , className =? "Gwe"            --> doFloat
     , className =? "Yad"            --> doCenterFloat
     , title =? "Mozilla Firefox"    --> doShift ( myWorkspaces !! 1 ) 
+    , className =? "qutebrowser"    --> doShift ( myWorkspaces !! 1 )
     , className =? "vlc"            --> doShift ( myWorkspaces !! 7 )
     , className =? "Gimp"           --> doShift ( myWorkspaces !! 8 )
     , className =? "discord"        --> doShift ( myWorkspaces !! 5 )
@@ -347,12 +353,16 @@ myManageHook = composeAll
     , isFullscreen --> doFullFloat
     ]
 
+myStartupHook :: X ()
 myStartupHook = do
   spawn "killall conky"   
   spawn "killall trayer"  
   spawnOnce "nitrogen --restore &"
+  spawnOnce "nm-applet"
   spawnOnce "volumeicon"
   spawnOnce "picom &"
+  spawn "/usr/bin/emacs --daemon"
+
 
   spawn ("sleep 2 && conky -c $HOME/.config/conky/xmonad/" ++ colorScheme ++ "-01.conkyrc")
   spawn ("sleep 2 && trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 2 --transparent true --alpha 0 " ++ colorTrayer ++ " --height 22")
