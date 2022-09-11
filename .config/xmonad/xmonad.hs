@@ -281,7 +281,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Restart xmonad
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
 
-      -- Dmenu scripts
+    -- Resize Windows
+    , ((myAltMask .|. controlMask, xK_j), decWindowSpacing 4)
+    , ((myAltMask .|. controlMask, xK_k), incWindowSpacing 4)
+    , ((myAltMask .|. controlMask, xK_h), decScreenSpacing 4)
+    , ((myAltMask .|. controlMask, xK_l), incScreenSpacing 4)
+
+    -- Dmenu scripts
     , ((modm .|. shiftMask, xK_Return    ), spawn "dmenu_run -c -l 20")
     , ((myAltMask .|. controlMask, xK_q    ), spawn "$HOME/dmenu/scripts/dmenu-system.sh")
     , ((myAltMask .|. controlMask, xK_e    ), spawn "$HOME/dmenu/scripts/dmenu-edit-configs.sh")
