@@ -54,20 +54,20 @@ return packer.startup(function(use)
   use 'norcalli/nvim-colorizer.lua'
   use 'mattn/emmet-vim'
   use 'andweeb/presence.nvim'
+  use "turbio/bracey.vim"
 
   -- Colorschemes
   use {
     'svrana/neosolarized.nvim',
     requires = { 'tjdevries/colorbuddy.nvim' }
   }
-  use { 'folke/tokyonight.nvim',
-    branch = "main",
-  }
+  use 'folke/tokyonight.nvim'
 
   -- LSP
   use 'neovim/nvim-lspconfig'
   use 'onsails/lspkind-nvim'
   use 'glepnir/lspsaga.nvim' -- LSP UIs
+  use "jose-elias-alvarez/null-ls.nvim"
 
   -- CMP plugins
   use 'hrsh7th/nvim-cmp'
