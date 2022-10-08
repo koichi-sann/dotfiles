@@ -43,6 +43,7 @@ packer.init {
 return packer.startup(function(use)
   -- My plugins here
   use 'wbthomason/packer.nvim'
+  use 'goolord/alpha-nvim'
   use "nvim-lua/popup.nvim"
   use "nvim-lua/plenary.nvim"
   use 'windwp/nvim-autopairs'
@@ -62,12 +63,15 @@ return packer.startup(function(use)
     requires = { 'tjdevries/colorbuddy.nvim' }
   }
   use 'folke/tokyonight.nvim'
+  use "folke/lua-dev.nvim"
 
   -- LSP
   use 'neovim/nvim-lspconfig'
   use 'onsails/lspkind-nvim'
   use 'glepnir/lspsaga.nvim' -- LSP UIs
   use "jose-elias-alvarez/null-ls.nvim"
+  use 'williamboman/mason.nvim'
+  use 'williamboman/mason-lspconfig.nvim'
 
   -- CMP plugins
   use 'hrsh7th/nvim-cmp'
