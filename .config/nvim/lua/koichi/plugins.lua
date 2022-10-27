@@ -63,7 +63,7 @@ return packer.startup(function(use)
     requires = { 'tjdevries/colorbuddy.nvim' }
   }
   use 'folke/tokyonight.nvim'
-  use "folke/lua-dev.nvim"
+  use "folke/neodev.nvim"
 
   -- LSP
   use 'neovim/nvim-lspconfig'

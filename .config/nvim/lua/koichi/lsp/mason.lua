@@ -1,8 +1,12 @@
 local status_ok, mason = pcall(require, "mason")
-if not status_ok then return end
+if not status_ok then
+  return
+end
 
 local status_ok_1, mason_lspconfig = pcall(require, "mason-lspconfig")
-if not status_ok_1 then return end
+if not status_ok_1 then
+  return
+end
 
 local servers = {
   "cssls",
@@ -30,12 +34,14 @@ local settings = {
 }
 
 mason.setup(settings)
-mason_lspconfig.setup {
+mason_lspconfig.setup({
   ensure_installed = servers,
-}
+})
 
 local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
-if not lspconfig_status_ok then return end
+if not lspconfig_status_ok then
+  return
+end
 
 local opts = {}
 
@@ -48,25 +54,19 @@ for _, server in pairs(servers) do
   server = vim.split(server, "@")[1]
 
   if server == "jsonls" then
-    local jsonls_opts = require "koichi.lsp.settings.jsonls"
+    local jsonls_opts = require("koichi.lsp.settings.jsonls")
     opts = vim.tbl_deep_extend("force", jsonls_opts, opts)
   end
 
   if server == "sumneko_lua" then
-    local l_status_ok, lua_dev = pcall(require, "lua-dev")
-    if not l_status_ok then return end
-    local sumneko_opts = require "koichi.lsp.settings.sumneko_lua"
+    local n_status_ok, neo_dev = pcall(require, "neodev")
+    if not n_status_ok then
+      return
+    end
+    local sumneko_opts = require("koichi.lsp.settings.sumneko_lua")
     opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
-    -- opts = vim.tbl_deep_extend("force", require("lua-dev").setup(), opts)
-    local luadev = lua_dev.setup {
-      --   -- add any options here, or leave empty to use the default settings
-      -- lspconfig = opts,
-      lspconfig = {
-        on_attach = opts.on_attach,
-        capabilities = opts.capabilities,
-      },
-    }
-    lspconfig.sumneko_lua.setup(luadev)
+    neo_dev.setup({})
+    lspconfig.sumneko_lua.setup(opts)
     goto continue
   end
 

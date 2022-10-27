@@ -1,18 +1,13 @@
-local status, nvim_lsp = pcall(require, "lspconfig")
-if (not status) then return end
-
 local M = {}
-
-local protocol = require('vim.lsp.protocol')
 
 local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not status_cmp_ok then return end
 
-M.capabilities = protocol.make_client_capabilities()
+M.capabilities = cmp_nvim_lsp.default_capabilities()
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
-M.capabilities = cmp_nvim_lsp.update_capabilities(M.capabilities)
 
 local icons = require 'koichi.icons'
+
 
 local signs = {
   { name = "DiagnosticSignError", text = icons.diagnostics.Error },
@@ -20,6 +15,18 @@ local signs = {
   { name = "DiagnosticSignHint", text = icons.diagnostics.Hint },
   { name = "DiagnosticSignInfo", text = icons.diagnostics.Information },
 }
+
+local augroup_format = vim.api.nvim_create_augroup("Format", { clear = true })
+local enable_format_on_save = function(_, bufnr)
+  vim.api.nvim_clear_autocmds({ group = augroup_format, buffer = bufnr })
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    group = augroup_format,
+    buffer = bufnr,
+    callback = function()
+      vim.lsp.buf.format({ bufnr = bufnr })
+    end,
+  })
+end
 
 M.setup = function()
 
@@ -52,55 +59,29 @@ local function lsp_keymaps(bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-
+  vim.cmd [[ command! Format execute 'lua vim.lsp.buf.format({ async = false })' ]]
 end
 
 M.on_attach = function(client, bufnr)
   lsp_keymaps(bufnr)
 
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+  if client.name == 'tsserver' then
+    client.server_capabilities.documentFormattingProvider = false
+  end
 
-  --Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
+  if client.name == 'sumneko_lua' then
+    enable_format_on_save(client, bufnr)
+  end
 
   -- formatting
   if client.server_capabilities.documentFormattingProvider then
     vim.api.nvim_create_autocmd("BufWritePre", {
       group = vim.api.nvim_create_augroup("Format", { clear = true }),
       buffer = bufnr,
-      callback = function() vim.lsp.buf.formatting_sync() end
+      callback = function() vim.lsp.buf.format({ async = false }) end
     })
   end
 end
-
---[[ protocol.CompletionItemKind = { ]]
---[[   '', -- Text ]]
---[[   '', -- Method ]]
---[[   '', -- Function ]]
---[[   '', -- Constructor ]]
---[[   '', -- Field ]]
---[[   '', -- Variable ]]
---[[   '', -- Class ]]
---[[   'ﰮ', -- Interface ]]
---[[   '', -- Module ]]
---[[   '', -- Property ]]
---[[   '', -- Unit ]]
---[[   '', -- Value ]]
---[[   '', -- Enum ]]
---[[   '', -- Keyword ]]
---[[   '﬌', -- Snippet ]]
---[[   '', -- Color ]]
---[[   '', -- File ]]
---[[   '', -- Reference ]]
---[[   '', -- Folder ]]
---[[   '', -- EnumMember ]]
---[[   '', -- Constant ]]
---[[   '', -- Struct ]]
---[[   '', -- Event ]]
---[[   'ﬦ', -- Operator ]]
---[[   '', -- TypeParameter ]]
---[[ } ]]
 
 vim.diagnostic.config({
   virtual_text = {
