@@ -1,0 +1,12 @@
+{
+    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    "Lua.diagnostics.disable": [
+        "exp-in-action",
+        "missing-parameter",
+        "undefined-global"
+    ],
+    "Lua.diagnostics.globals": [
+        "vim"
+    ],
+    "Lua.workspace.checkThirdParty": false
+}
