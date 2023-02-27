@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if [[ "$1" == "--tr" ]]; then
+	kitty & disown
+
+elif [[ "$1" == "--ff" ]]; then
+	firefox & disown
+	
+elif [[ "$1" == "--menu" ]]; then
+	rofi -no-lazy-grab -show drun -theme $HOME/.config/bspwm/rices/$RICETHEME/launcher.rasi & disown
+
+elif [[ "$1" == "--fm" ]]; then
+  pcmanfm ~ & disown
+
+elif [[ "$1" == "--ge" ]]; then
+	kitty -e nvim /home/koichi/ & disown
+
+elif [[ "$1" == "--tg" ]]; then
+  qutebrowser &
+
+elif [[ "$1" == "--rd" ]]; then
+	firefox --new-tab "https://reddit.com"
+
+elif [[ "$1" == "--ml" ]]; then
+	firefox --new-tab "https://mail.google.com"
+
+elif [[ "$1" == "--nm" ]]; then
+	networkmanager_dmenu
+	
+elif [[ "$1" == "--zo" ]]; then
+	kitty -T sysfetch -e $HOME/.local/bin/sysfetch
+	
+elif [[ "$1" == "--up" ]]; then
+	kitty -T updating -e "paru -Syyuu"
+
+fi

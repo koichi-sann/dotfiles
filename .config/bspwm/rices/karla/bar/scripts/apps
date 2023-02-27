@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [[ "$1" == "--tr" ]]; then
+	kitty -d ~ & disown
+
+elif [[ "$1" == "--ff" ]]; then
+	firefox & disown
+
+elif [[ "$1" == "--fm" ]]; then
+	pcmanfm ~ & disown
+
+elif [[ "$1" == "--ge" ]]; then
+	qutebrowser & disown
+
+elif [[ "$1" == "--tg" ]]; then
+	kitty -e lf $HOME/ &
+	
+elif [[ "$1" == "--wa" ]]; then
+	kitty -e htop 
+	
+elif [[ "$1" == "--up" ]]; then
+	kitty -T updating -e "paru -Syyuu"
+
+fi

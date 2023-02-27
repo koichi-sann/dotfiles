@@ -1,0 +1,85 @@
+#! /bin/sh
+
+wid=$1
+class=$2
+instance=$3
+consequences=$4
+title=$(xtitle "$wid")
+
+if [ "$instance" = kitty ] ; then
+	case "$title" in
+		lf)
+			echo "state=floating rectangle=811x286+0+0 center=on"
+			;;
+		zfetch)
+		    echo "border=off state=floating rectangle=616x354+36+115"
+		    ;;
+		sysfetch)
+		    echo "border=off state=floating rectangle=352x500+36+115"
+		    ;;
+		updating)
+			echo "state=floating rectangle=483x190+1090+72"
+			;;
+		musicplayer)
+			echo "state=floating rectangle=630x215+0+0 center=on"
+			;;
+    floatterm)
+      echo "state=floating center=on rectangle=781x451+0+0"
+	esac
+fi
+
+main () {
+case "$class" in
+	mpv)
+	    eval "$consequences"
+		[ "$state" ] || echo "state=floating focus=on center=on rectangle=925x519+0+0 border=off"
+		;;
+	Viewnior)
+	    eval "$consequences"
+	    [ "$state" ] || echo "state=floating focus=on center=on border=off"
+		;;
+	retroarch)
+	    eval "$consequences"
+	    [ "$state" ] || echo "state=pseudo_tiled desktop=^6 center=on follow=on border=off"
+	    ;;
+	lf)
+	    eval "$consequences"
+	    [ "$state" ] || echo "state=floating rectangle=811x316+0+0 center=on"
+	    ;;
+	Pavucontrol)
+	    eval "$consequences"
+	    [ "$state" ] || echo "state=floating follow=on center=on"
+	    ;;
+	Virt-manager)
+	    eval "$consequences"
+	    [ "$state" ] || echo "state=floating desktop=^5 follow=on center=on"
+	    ;;
+	pcmanfm)
+	    eval "$consequences"
+	    [ "$state" ] || echo "state=pseudo_tiled desktop=^2 rectangle=966x576+0+0 follow=on center=on border=off"
+	    ;;
+	firefox|Navigator)
+	    eval "$consequences"
+	    [ "$state" ] || echo "state=pseudo_tiled desktop=^2 border=off rectangle=1450x820+0+0 center=on follow=on"
+	    ;;
+	 Transmission-gtk)
+	    eval "$consequences"
+	    [ "$state" ] || echo "desktop=^6 follow=on"
+	    ;;
+		"")
+        sleep 0.5
+		wm_class=($(xprop -id $wid | grep "WM_CLASS" | grep -Po '"\K[^,"]+'))
+		class=${wm_class[-1]}
+		[[ ${#wm_class[@]} == "2" ]] && instance=${wm_class[0]}
+		[[ -n "$class" ]] && main
+		;;
+esac
+}
+
+main
+case "$instance" in
+     Toolkit)
+        eval "$consequences"
+        [ "$state" ] || echo "state=floating sticky=on rectangle=500x290+1054+593"
+	    ;;
+esac  
