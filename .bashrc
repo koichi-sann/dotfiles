@@ -43,6 +43,7 @@ shopt -s checkwinsize
 shopt -s expand_aliases
 shopt -s histappend
 bind "set completion-ignore-case on"
+bind 'set show-all-if-ambiguous on'
 
 # yt-dlp
 alias yta-aac="yt-dlp --extract-audio --audio-format aac "
@@ -80,24 +81,11 @@ ex ()
   fi
 }
 
-__main() {
-  local major="${BASH_VERSINFO[0]}"
-  local minor="${BASH_VERSINFO[1]}"
-
-  if ((major > 4)) || { ((major == 4)) && ((minor >= 1));
-  }; then
-      source <(/sbin/starship init bash --print-full-init)
-    else 
-      source /dev/stdin <<<"$/sbin/starship init bash --print-full-init)"
-  fi 
-}
-
-__main
-unset -f __main
-
 # BEGIN_KITTY_SHELL_INTEGRATION
 if test -n "$KITTY_INSTALLATION_DIR" -a -e "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; then source "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; fi
 # END_KITTY_SHELL_INTEGRATION
+#
+eval "$(starship init bash)"
 
 alias cfg='/usr/bin/git --git-dir=/home/koichi/dotfiles --work-tree=/home/koichi'
 neofetch
