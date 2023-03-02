@@ -10,6 +10,8 @@ return {
       b.opts.hl_shortcut = "Macro"
       return b
     end
+    
+    local icons = require "koichi.icons"
 
     dashboard.section.header.val = {
       [[ _______             ____   ____.__]],
