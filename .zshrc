@@ -125,7 +125,7 @@ alias lg=lazygit
 alias yv=youtube-viewer
 alias yt-dlp=youtube-dl
 alias ncmpcpp='ncmpcpp ncmpcpp_directory=$HOME/.config/ncmpcpp/'
-alias sudo='fucking'
+alias fucking=sudo
 alias pacsyu='sudo pacman -Syu'
 alias pacsyuu='sudo pacman -Syyuu'
 alias parsua='paru -Sua --noconfirm'
@@ -146,4 +146,4 @@ alias cfg='/usr/bin/git --git-dir=/home/koichi/dotfiles --work-tree=/home/koichi
 
 eval "$(starship init zsh)"
 
-neofetch
+pfetch

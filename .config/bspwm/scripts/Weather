@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 encode_to_url_format() {
     echo "$1" | sed 's/ /%20/g'
@@ -9,7 +9,7 @@ check_if_empty() {
 }
 
 KEY="1f6e449790b8cf73a3cab8d5715483f8"
-CITY="Hrodna"
+CITY="Hrodno"
 CITYN=$(encode_to_url_format "$CITY")
 WEATHER=$(curl -sf "api.openweathermap.org/data/2.5/weather?q=$CITYN&appid=$KEY&units=metric")
 

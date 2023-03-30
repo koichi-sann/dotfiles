@@ -7,14 +7,13 @@ declare -a options=(
   "Reboot"
   "Shutdown"
   "Suspend"
-  "Quit"
 )
 
-choice=$(printf '%s\n' "${options[@]}" | dmenu -c -l 10 -i -p 'Shutdown menu:')
+choice=$(printf '%s\n' "${options[@]}" | rofi -dmenu -theme "$HOME/.config/bspwm/rices/$RICETHEME/launcher.rasi")
 
 case $choice in 
   'Logout')
-    answer="$(echo -e "No\nYes" | dmenu -c -l 10 -i -p "Logout?")"
+    answer="$(echo -e "No\nYes" | rofi -dmenu -theme "$HOME/.config/bspwm/rices/$RICETHEME/launcher.rasi")"
 
     if [[ $answer == "Yes" ]]; then
       killall awesome || echo "Process was not running."
@@ -28,8 +27,7 @@ case $choice in
     fi
     ;;
   'Reboot')
-    answer="$(echo -e "No\nYes" | dmenu -c -l 10 -i -p "Reboot?")"
-
+    answer="$(echo -e "No\nYes" | rofi -dmenu -theme "$HOME/.config/bspwm/rices/$RICETHEME/launcher.rasi")" 
     if [[ $answer == "Yes" ]]; then
       loginctl reboot
     fi
@@ -39,8 +37,7 @@ case $choice in
     fi
     ;;
   'Shutdown')
-    answer="$(echo -e "No\nYes" | dmenu -c -l 10 -i -p "Shutdown?")"
-
+    answer="$(echo -e "No\nYes" | rofi -dmenu -theme "$HOME/.config/bspwm/rices/$RICETHEME/launcher.rasi")"  
     if [[ $answer == "Yes" ]]; then
       loginctl poweroff
     fi
@@ -50,8 +47,7 @@ case $choice in
     fi
     ;;
   'Suspend')
-    answer="$(echo -e "No\nYes" | dmenu -c -l 10 -i -p "Suspend?")"
-
+    answer="$(echo -e "No\nYes" | rofi -dmenu -theme "$HOME/.config/bspwm/rices/$RICETHEME/launcher.rasi")"  
     if [[ $answer == "Yes" ]]; then
       loginctl suspend
     fi
@@ -59,9 +55,6 @@ case $choice in
     if [[ $answer == "No" ]]; then 
       echo "User chose not to suspend." && exit 1
     fi
-    ;;
-  'Quit')
-    echo "Program terminated." && exit 1
     ;;
   *)
     exit 1

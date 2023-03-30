@@ -6,8 +6,9 @@
 
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+export EDITOR=nvim
 
-setxkbmap -layout "us,ru" -option "grp:caps_toggle" 
+setxkbmap -layout "us,ru" -option "grp:caps_toggle"
 
 [ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
 
@@ -26,7 +27,7 @@ alias lg=lazygit
 alias yv=youtube-viewer
 alias yt-dlp=youtube-dl
 alias ncmpcpp='ncmpcpp ncmpcpp_directory=$HOME/.config/ncmpcpp/'
-alias sudo='fucking'
+alias fucking=sudo
 alias pacsyu='sudo pacman -Syu'
 alias pacsyuu='sudo pacman -Syyuu'
 alias parsua='paru -Sua --noconfirm'
@@ -88,4 +89,4 @@ if test -n "$KITTY_INSTALLATION_DIR" -a -e "$KITTY_INSTALLATION_DIR/shell-integr
 eval "$(starship init bash)"
 
 alias cfg='/usr/bin/git --git-dir=/home/koichi/dotfiles --work-tree=/home/koichi'
-neofetch
+pfetch

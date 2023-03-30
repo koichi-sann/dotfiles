@@ -69,5 +69,3 @@ chosen="$(printf "$options" | $rofi_command -dmenu)"
 				bspc wm -r
 				;;				
 		esac
-	
-

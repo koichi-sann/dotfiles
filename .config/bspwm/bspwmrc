@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/usr/bin/env bash
 
 export RICETHEME=$(<$HOME/.config/bspwm/rice.cfg)
 PATH="$HOME/.config/bspwm/scripts:$PATH"

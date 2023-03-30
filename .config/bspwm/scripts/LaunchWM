@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/usr/bin/env bash
 
 bspdir="$HOME/.config/bspwm"
 polydir="$HOME/.config/bspwm/rices/$RICETHEME/polybar"

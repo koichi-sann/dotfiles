@@ -1,4 +1,4 @@
-#$/usr/bin/env bash
+#/usr/bin/env bash
 
 DMEDITOR="nvim"
 
@@ -12,15 +12,11 @@ declare -a options=(
 "xmobar - $HOME/.config/xmobar/doom-one-xmobarrc"
 "xmonad - $HOME/.config/xmonad/xmonad.hs"
 "zsh - $HOME/.zshrc"
-"quit"
 )
 
-choice=$(printf '%s\n' "${options[@]}" | dmenu -i -l 20 -c -p 'Edit config:')
+choice=$(printf '%s\n' "${options[@]}" | rofi -dmenu -theme "~/.config/bspwm/rices/$RICETHEME/launcher.rasi")
 
-if [[ "$choice" == "quit" ]]; then
-  echo 'Program terminated.' && exit 1
-
-elif [ "$choice" ]; then
+if [ "$choice" ]; then
   cfg=$(printf '%s\n' "${choice}" | awk '{print $NF}')
   "kitty" "-e" $DMEDITOR "$cfg"
 
@@ -28,4 +24,5 @@ else
   echo "Program terminated." && exit 1
 fi
 
+echo 'EGOT CHMO'
 

@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-Control="MPD"
+Control="mpd"
 [ -n "$(pgrep spotify)" ] && Control="spotify"
 [ -n "$(pgrep qutebrowser)" ] && Control="qutebrowser"
 # [ -n "$(pgrep brave-bin)" ] && Control="brave-bin"
