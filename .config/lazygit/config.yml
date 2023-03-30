@@ -17,12 +17,11 @@ gui:
 
   showFileTree: true
   showListFooter: true
-  showRandomTip: true
   showBottomLine: true
   showCommandLog: true
   showIcons: true
 
 disableStartupPopups: false
-notARepository: 'skip'
+notARepository: "skip"
 os:
-  editCommand: 'nvim'
+  editCommand: "nvim"
