@@ -21,6 +21,7 @@ Customize = {
 		["catppuccin"] = { enabled = true },
 		["colorbuddy.nvim"] = { enabled = false },
 		["comment.nvim"] = { enabled = true },
+		["dressing"] = { enabled = true },
 		["gitsigns.nvim"] = { enabled = true },
 		["gruvbox.nvim"] = { enabled = true },
 		["indent-blankline"] = { enabled = true },
