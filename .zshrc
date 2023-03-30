@@ -1,44 +1,23 @@
-########## Prompt ##########
-
-# git_prompt() {
-#     local branch="$(git symbolic-ref HEAD 2> /dev/null | cut -d'/' -f3-)"
-#     local branch_truncated="${branch:0:30}"
-#     if (( ${#branch} > ${#branch_truncated} )); then
-#         branch="${branch_truncated}..."
-#     fi
-#
-#     [ -n "${branch}" ] && echo "  ${branch}"
-# }
-
-# setopt PROMPT_SUBST
-# PROMPT='%B%F{blue}󰣇%f%b  %B%F{magenta}%n%f%b %B%F{red}%~%f%b%B%F{yellow}$(git_prompt)%f%b %(?.%B%F{green}✓.%F{red}✕)%f%b %B%F{green}%f%b '
-
 export EDITOR=nvim;
 export HISTORY_IGNORE="(ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..)"
 
-setxkbmap -layout "us,ru" -option "grp:caps_toggle" 
+setxkbmap -layout "us,ru" -option "grp:caps_toggle"
 
-if [ -d "$HOME/.local/bin" ] ;
-  then PATH="$HOME/.local/bin:$PATH"
-fi
-
-if [ -d "$HOME/.cargo/bin:" ] ;
-  then PATH="$HOME/.cargo/bin:$PATH"
-fi
 
 # Lines configured by zsh-newuser-install
-HISTFILE=~/.config/zsh/zhistory
-HISTSIZE=5000
-SAVEHIST=5000
-bindkey -v
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.cache/zsh/history
+
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '~/.zshrc'
 
 autoload -Uz compinit
 autoload -Uz add-zsh-hook
-zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
+zmodload zsh/complist
 compinit -d ~/.config/zsh/zcompdump-$ZSH_VERSION
 _comp_options+=(globdots)
 # End of lines added by compinstall
@@ -59,10 +38,6 @@ expand-or-complete-with-dots() {
 zle -N expand-or-complete-with-dots
 bindkey "^I" expand-or-complete-with-dots
 
-# Plugins
-source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.config/zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
@@ -83,6 +58,53 @@ if [[ "$TERM" == (Eterm*|alacritty*|termite*|gnome*|konsole*|kterm*|putty*|rxvt*
 	add-zsh-hook -Uz precmd xterm_title_precmd
 	add-zsh-hook -Uz preexec xterm_title_preexec
 fi
+
+# Change cursor shape for different vi modes.
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+    [[ $1 = 'block' ]]; then
+      echo -ne '\e[1 q'
+    elif [[ ${KEYMAP} == main ]] ||
+      [[ ${KEYMAP} == viins ]] ||
+      [[ ${KEYMAP} == '' ]] ||
+      [[ $1 = 'beam' ]]; then
+          echo -ne '\e[5 q'
+  fi
+}
+zle -N zle-keymap-select
+zle-line-init() {
+  zle -K viins
+  echo -ne "\e[5 q"
+}
+zle -N zle-line-init
+echo -ne '\e[5 q'
+preexec () { echo -ne '\e[5 q' ;}
+
+# Use lf to switch directories and bind it to ctrl-o
+lfcd () {
+  tmp="${mktemp}"
+  lf -last-dir-path="$tmp" "$@"
+  if [ -f "$tmp" ]; then
+    dir="$(cat "$tmp")"
+    rm -f "$tmp"
+    [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+  fi
+}
+bindkey -s '^o' 'lfcd\n'
+
+# Edit line in vim with ctrl-e
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
+
+# vim
+bindkey -v
+export KEYTIMEOUT=1
+
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
 
 #
 # # ex - archive extractor
@@ -108,6 +130,11 @@ ex ()
     echo "'$1' is not a valid file"
   fi
 }
+
+# Plugins
+source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
+source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+source ~/.config/zsh/zsh-history-substring-search/zsh-history-substring-search.zsh 2>/dev/null
 
  ##### Alias #####
 alias ls='exa --icons -l'
