@@ -77,4 +77,39 @@ return {
 		end,
 	},
 	-- ----------------------------------------------------------------------- }}}
+	-- {{{ zen-mode.nvim
+
+	{
+		"folke/zen-mode.nvim",
+		enabled = Is_Enabled("zen-mode.nvim"),
+		opts = {
+			window = {
+				width = 0.7,
+				height = 0.85,
+				options = {
+					colorcolumn = "",
+					cursorcolumn = false,
+					cursorline = false,
+					number = true,
+					relativenumber = true,
+				},
+			},
+			plugins = {
+				enabled = true,
+				options = {
+					ruler = false,
+					showmd = true,
+				},
+				twilight = { enabled = false },
+				gitsigns = { enabled = false },
+				tmux = { enabled = false },
+				alacritty = {
+					enabled = true,
+					font = "15",
+				},
+			},
+		},
+	},
+
+	-- ----------------------------------------------------------------------- }}}
 }

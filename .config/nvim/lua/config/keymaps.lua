@@ -259,3 +259,8 @@ Keymap("n", "<leader>Tg", "<cmd>lua Customize.toggleterm.lazygit()<cr>")
 Keymap("n", "<leader>VV", "V`]")
 
 -- ------------------------------------------------------------------------- }}}
+-- {{{ Z - ZenMode
+
+Keymap("n", "<leader>zm", "<cmd>lua require('zen-mode').toggle()<CR>")
+
+-- ------------------------------------------------------------------------- }}}

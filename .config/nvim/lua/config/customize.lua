@@ -66,6 +66,7 @@ Customize = {
 		["vim-startuptime"] = { enabled = true },
 		["vim-visual-multi"] = { enabled = true },
 		["virtcolumn.nvim"] = { enabled = true },
+		["zen-mode.nvim"] = { enabled = true },
 	},
 }
 
