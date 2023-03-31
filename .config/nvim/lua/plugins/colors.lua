@@ -135,6 +135,10 @@ return {
 		enabled = Is_Enabled("nvim-treesitter"),
 		version = false,
 		build = ":TSUpdate",
+		keys = {
+			{ "<c-space>", desc = "Increment selection" },
+			{ "<bs>", desc = "Decrement selection", mode = "x" },
+		},
 		opts = {
 			autopairs = { enable = true },
 			autotag = { enable = true, disable = { "xml" } },
@@ -154,6 +158,15 @@ return {
 			},
 			disable = { "latex" },
 			ensure_installed = Constants.ensure_installed.treesitter,
+			incremental_selection = {
+				enable = true,
+				keymaps = {
+					init_selection = "<C-space>",
+					node_incremental = "<C-space>",
+					scope_incremental = "<nop>",
+					node_decremental = "<bs>",
+				},
+			},
 		},
 
 		config = function(_, opts)
@@ -164,9 +177,28 @@ return {
 			"windwp/nvim-ts-autotag",
 			"mrjones2014/nvim-ts-rainbow",
 			"JoosepAlviste/nvim-ts-context-commentstring",
+			{
+				"nvim-treesitter/nvim-treesitter-textobjects",
+				init = function()
+					-- PERF: no need to load the plugin, if we only need its queries for mini.ai
+					local plugin = require("lazy.core.config").spec.plugins["nvim-treesitter"]
+					local opts = require("lazy.core.plugin").values(plugin, "opts", false)
+					local enabled = false
+					if opts.textobjects then
+						for _, mod in ipairs({ "move", "select", "swap", "lsp_interop" }) do
+							if opts.textobjects[mod] and opts.textobjects[mod].enable then
+								enabled = true
+								break
+							end
+						end
+					end
+					if not enabled then
+						require("lazy.core.loader").disable_rtp_plugin("nvim-treesitter-textobjects")
+					end
+				end,
+			},
 		},
 	},
-
 	-- ----------------------------------------------------------------------- }}}
 	-- {{{ nvim-ts-rainbow
 

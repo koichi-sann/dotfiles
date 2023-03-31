@@ -74,14 +74,16 @@ end
 vim.cmd([[filetype plugin indent on]])
 vim.cmd([[language en_US.UTF-8]])
 vim.cmd([[set iskeyword+=-]])
-vim.cmd([[set wildignore+=*/node_modules/*]])
-vim.cmd([[autocmd InsertLeave * set nopaste]])
-vim.cmd([[
-augroup BgHighlight
-  autocmd!
-  autocmd WinEnter * set cul
-  autocmd WinLeave * set nocul
-augroup END
-]])
+
+-- ------------------------------------------------------------------------- }}}
+-- {{{ Bullets
+
+vim.g.bullets_enabled_file_types = {
+	"gitcommit",
+	"markdown",
+	"scratch",
+	"text",
+	"wiki",
+}
 
 -- ------------------------------------------------------------------------- }}}

@@ -30,7 +30,7 @@ return {
 			end
 
 			local completion = {
-				completeopt = "menu,menuone,noinster",
+				completeopt = "menu,menuone,noinsert",
 				keyword_length = 1,
 			}
 
@@ -131,40 +131,6 @@ return {
 			opts.sources = Constants.completion.sources
 			opts.window = window
 			opts.experimental = experimental
-
-			--         ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-			--         ["<C-f>"] = cmp.mapping.scroll_docs(4),
-			--         ["<CR>"] = cmp.mapping.confirm {
-			--           behavior = cmp.ConfirmBehavior.Replace,
-			--           select = false
-			--         },
-			--       ["<S-Tab>"] = cmp.mapping(function(fallback)
-			--         if cmp.visible() then
-			--           cmp.select_prev_item()
-			--         elseif require"luasnip".jumpable(-1) then
-			--           require"luasnip".jump(-1)
-			--         else
-			--           fallback()
-			--         end
-			--       end, {
-			--       "i",
-			--       "s",
-			--     }),
-			--   }),
-			--   formatting = {
-			--     fields = { "kind", "abbr", "menu" },
-			--     format = function(entry, vim_item)
-			--       local icons = Constants.icons.kind
-			--       vim_item.kind = icons[vim_item.kind]
-			--       vim_item.menu = (Constants.completion.source_mapping)[entry.source.name]
-			--       return vim_item
-			--     end,
-			--   },
-			--   experimental = {
-			--     ghost_text = true,
-			--   },
-			--   sources = cmp.config.sources(Constants.completion.sources),
-			-- }
 		end,
 	},
 	-- --------------------------------------------------------------------- }}}
